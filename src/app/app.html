@@ -1,1 +1,9 @@
+<mat-toolbar>
+  <div class="w-full flex justify-between items-center">
+    <a routerLink="/">{{title}}</a>
+    <button matIconButton matTooltip="Add contact" (click)="openAddContactDialog()">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
 <router-outlet />
