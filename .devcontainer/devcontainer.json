@@ -21,7 +21,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "npm install && echo 'source <(ng completion script)' >> ~/.bashrc",
 
 	// Configure tool-specific properties.
 	"customizations": {
