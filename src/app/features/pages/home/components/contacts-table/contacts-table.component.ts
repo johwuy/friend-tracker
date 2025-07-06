@@ -118,6 +118,6 @@ export class ContactsTableComponent implements AfterViewInit {
   }
 
   protected deleteContact(id: string) {
-    console.log(`deleting ${id}`);
+    this.contactsService.deleteContact(id);
   }
 }
