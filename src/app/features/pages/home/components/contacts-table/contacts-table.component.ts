@@ -18,9 +18,17 @@ export class ContactsTableComponent implements AfterViewInit {
 
   protected contactsService = inject(ContactsService);
 
+  // dataSource only recieives a snapshop ot contacts.
   protected dataSource = new MatTableDataSource<Contact>(this.contactsService.contacts());
 
   @ViewChild(MatSort) sort!: MatSort;
+
+  constructor() {
+    // effects is needed to update dataSource when contacts udate.
+    effect(() => {
+      this.dataSource.data = this.contactsService.contacts();
+    });
+  }
 
   ngAfterViewInit() {
     this.dataSource.sortingDataAccessor = this.sortingDataAccessor.bind(this);
