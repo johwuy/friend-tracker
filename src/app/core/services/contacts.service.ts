@@ -35,6 +35,10 @@ export class ContactsService {
   }
 
   deleteContact(id: string) {
-    console.log(id);
+    // Make DELETE request to delete contact
+
+    this.contactsSignal.update(oldContacts => {
+      return oldContacts.filter(contact => contact.id !== id)
+    })
   }
 }
