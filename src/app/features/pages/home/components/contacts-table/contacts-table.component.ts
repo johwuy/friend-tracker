@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { ContactsService } from '@core/services/contacts.service';
 import { Contact } from '@shared/models/contact';
 import { RelationshipStatus } from '@shared/constants/relationship-status';
@@ -9,12 +11,12 @@ import { RelationshipLabel } from '@shared/constants/relationship-label';
 
 @Component({
   selector: 'app-contacts-table',
-  imports: [MatTableModule, MatSortModule, DatePipe],
+  imports: [MatTableModule, MatSortModule, DatePipe, MatButtonModule, MatIconModule],
   templateUrl: './contacts-table.component.html',
   styleUrl: './contacts-table.component.scss'
 })
 export class ContactsTableComponent implements AfterViewInit {
-  protected readonly columnsToDisplay = ['name', 'age', 'birthday', 'daysTillBirthday', 'relationship'];
+  protected readonly columnsToDisplay = ['name', 'age', 'birthday', 'daysTillBirthday', 'relationship', 'delete_contact'];
 
   protected contactsService = inject(ContactsService);
 
@@ -113,5 +115,9 @@ export class ContactsTableComponent implements AfterViewInit {
     }
 
     return age
+  }
+
+  protected deleteContact(id: string) {
+    console.log(`deleting ${id}`);
   }
 }
