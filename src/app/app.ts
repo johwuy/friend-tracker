@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateContactDialog } from '@features/pages/home/components/create-contact/create-contact.dialog';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,8 @@ import { filter } from 'rxjs/operators';
 })
 export class App {
   protected title = 'friend-tracker';
+
+  private dialogService = inject(MatDialog);
   private routerService = inject(Router);
   protected isHomePath = false;
 
@@ -24,6 +28,6 @@ export class App {
   }
 
   openAddContactDialog() {
-    console.log('opens add contact dialog');
+    this.dialogService.open(CreateContactDialog);
   }
 }
