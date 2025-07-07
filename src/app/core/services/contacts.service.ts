@@ -23,6 +23,10 @@ export class ContactsService {
     ]);
   }
 
+  getContact(id: string) {
+    return this.contacts().find(contact => contact.id === id);
+  }
+
   addContact(formData: ContactFormData) {
     // Make GET Http Request, which returns id
     // In `subscribe`, add to `contacts`
