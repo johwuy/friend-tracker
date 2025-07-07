@@ -1,9 +1,11 @@
 <mat-toolbar>
   <div class="w-full flex justify-between items-center">
     <a routerLink="/">{{title}}</a>
-    <button matIconButton matTooltip="Add contact" (click)="openAddContactDialog()">
-      <mat-icon>person_add</mat-icon>
-    </button>
+    @if (isHomePath) {
+      <button matIconButton matTooltip="Add contact" (click)="openAddContactDialog()">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    }
   </div>
 </mat-toolbar>
 <div class="m-8">
