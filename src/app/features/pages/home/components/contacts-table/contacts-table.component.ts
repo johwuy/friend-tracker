@@ -6,8 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactsService } from '@core/services/contacts.service';
 import { Contact } from '@shared/models/contact';
-import { RelationshipStatus } from '@shared/constants/relationship-status';
-import { RelationshipLabel } from '@shared/constants/relationship-label';
 
 @Component({
   selector: 'app-contacts-table',
@@ -73,10 +71,6 @@ export class ContactsTableComponent implements AfterViewInit {
     }
 
     return value;
-  }
-
-  protected getRelationshipLabel(relationship: RelationshipStatus): string {
-    return RelationshipLabel[relationship];
   }
 
   protected daysTillBirthday(birthday: Date) {

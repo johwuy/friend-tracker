@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { RelationshipStatus } from '@shared/constants/relationship-status';
 import { Contact } from '@shared/models/contact';
 import { ContactFormData } from '@shared/models/contact-form-data';
 
@@ -19,7 +18,7 @@ export class ContactsService {
   getContacts() {
     this.contactsSignal.set([
       { id: "1", name: "foo bar", birthday: new Date() },
-      { id: "2", name: "bar boz", email: "barboz@foo.com", phoneNumber: "(XXX) XXX-XXXX", relationship: RelationshipStatus.Friend }
+      { id: "2", name: "bar boz", email: "barboz@foo.com", phoneNumber: "(XXX) XXX-XXXX", relationship: 'Friend' }
     ]);
   }
 
