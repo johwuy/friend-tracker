@@ -15,7 +15,7 @@ export class ContactsService {
   private readonly API_URL = 'http://localhost:5031/contacts';
 
   constructor() {
-    this.getContacts();
+    this.getContacts().subscribe(result => this.contactsSignal.set(result));
   }
 
   private convertResponse(response: RawContact): Contact {
@@ -23,9 +23,8 @@ export class ContactsService {
   }
 
   getContacts() {
-    this.httpService.get<RawContact[]>(this.API_URL)
-      .pipe(map(result => result.map(contact => this.convertResponse(contact))))
-      .subscribe(result => this.contactsSignal.set(result))
+    return this.httpService.get<RawContact[]>(this.API_URL)
+      .pipe(map(result => result.map(contact => this.convertResponse(contact))));
   }
 
   getContact(id: string): Observable<Contact> {
