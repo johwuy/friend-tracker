@@ -16,11 +16,13 @@ export class ContactsService {
     this.getContacts();
   }
 
+  private convertResponse(response: RawContact): Contact {
+    return {...response, birthday: response.birthday ? new Date(response.birthday): response.birthday} as Contact;
+  }
+
   getContacts() {
     this.httpService.get<RawContact[]>('http://localhost:5031/contacts')
-    .pipe(map(result => {
-      return result.map(contact => ({...contact, birthday: contact.birthday ? new Date(contact.birthday): contact.birthday} as Contact));
-    }))
+    .pipe(map(result => result.map(contact => this.convertResponse(contact))))
     .subscribe(result => this.contactsSignal.set(result))
   }
 
