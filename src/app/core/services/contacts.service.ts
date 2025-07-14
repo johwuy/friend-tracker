@@ -12,6 +12,7 @@ export class ContactsService {
   private httpService = inject(HttpClient);
   private contactsSignal = signal<Contact[]>([]);
   readonly contacts = this.contactsSignal.asReadonly();
+  private readonly API_URL = 'http://localhost:5031/contacts';
 
   constructor() {
     this.getContacts();
@@ -22,13 +23,13 @@ export class ContactsService {
   }
 
   getContacts() {
-    this.httpService.get<RawContact[]>('http://localhost:5031/contacts')
+    this.httpService.get<RawContact[]>(this.API_URL)
       .pipe(map(result => result.map(contact => this.convertResponse(contact))))
       .subscribe(result => this.contactsSignal.set(result))
   }
 
   getContact(id: string): Observable<Contact> {
-    return this.httpService.get<RawContact>(`http://localhost:5031/contacts/${id}`)
+    return this.httpService.get<RawContact>(`${this.API_URL}/${id}`)
       .pipe(map(result => this.convertResponse(result)));
   }
 
