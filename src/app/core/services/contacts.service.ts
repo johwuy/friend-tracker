@@ -18,18 +18,18 @@ export class ContactsService {
   }
 
   private convertResponse(response: RawContact): Contact {
-    return {...response, birthday: response.birthday ? new Date(response.birthday): response.birthday} as Contact;
+    return { ...response, birthday: response.birthday ? new Date(response.birthday) : response.birthday } as Contact;
   }
 
   getContacts() {
     this.httpService.get<RawContact[]>('http://localhost:5031/contacts')
-    .pipe(map(result => result.map(contact => this.convertResponse(contact))))
-    .subscribe(result => this.contactsSignal.set(result))
+      .pipe(map(result => result.map(contact => this.convertResponse(contact))))
+      .subscribe(result => this.contactsSignal.set(result))
   }
 
   getContact(id: string): Observable<Contact> {
     return this.httpService.get<RawContact>(`http://localhost:5031/contacts/${id}`)
-    .pipe(map(result => this.convertResponse(result)));
+      .pipe(map(result => this.convertResponse(result)));
   }
 
   addContact(formData: ContactFormData) {
