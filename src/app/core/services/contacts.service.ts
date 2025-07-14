@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact, RawContact } from '@shared/models/contact';
 import { ContactFormData } from '@shared/models/contact-form-data';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -26,8 +27,9 @@ export class ContactsService {
     .subscribe(result => this.contactsSignal.set(result))
   }
 
-  getContact(id: string) {
-    return this.contacts().find(contact => contact.id === id);
+  getContact(id: string): Observable<Contact> {
+    return this.httpService.get<RawContact>(`http://localhost:5031/contacts/${id}`)
+    .pipe(map(result => this.convertResponse(result)));
   }
 
   addContact(formData: ContactFormData) {
