@@ -1,1 +1,2 @@
-export type RelationshipStatus = "Family" | "Friend" | "Colleague" | "Pet";
+export const RelationshipStatuses = ["Family", "Friend", "Colleague", "Pet"] as const;
+export type RelationshipStatus = typeof RelationshipStatuses[number];
