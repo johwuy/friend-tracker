@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact, RawContact } from '@shared/models/contact';
 import { ContactFormData } from '@shared/models/contact-form-data';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +45,12 @@ export class ContactsService {
 
   deleteContact(id: string) {
     // Make DELETE request to delete contact
+    const previous = this.contacts();
+    this.contactsSignal.update(contacts => contacts.filter(contact => contact.id != id))
 
-    this.contactsSignal.update(oldContacts => {
-      return oldContacts.filter(contact => contact.id !== id)
-    })
+    return this.httpService.delete<void>(`${this.API_URL}/${id}`).pipe(catchError(error => {
+      this.contactsSignal.set(previous);
+      return throwError(() => error);
+    }));
   }
 }
