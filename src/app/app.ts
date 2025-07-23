@@ -24,7 +24,7 @@ export class App {
 
   constructor() {
     this.routerService.events.pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => this.isHomePath = event.url === '/home');
+      .subscribe(event => this.isHomePath = event.urlAfterRedirects.startsWith('/home'));
   }
 
   openAddContactDialog() {
