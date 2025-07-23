@@ -12,7 +12,7 @@ export class ContactsService {
   private httpService = inject(HttpClient);
   private contactsSignal = signal<Contact[]>([]);
   readonly contacts = this.contactsSignal.asReadonly();
-  private readonly API_URL = 'http://localhost:5031/contacts';
+  private readonly API_URL = 'http://localhost:5149/api/contacts';
 
   constructor() {
     this.getContacts().subscribe(result => this.contactsSignal.set(result));
