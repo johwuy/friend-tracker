@@ -1,9 +1,11 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+:host {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  button {
-    margin-right: 24px;
+    button {
+      margin-right: 24px;
+    }
   }
 }
