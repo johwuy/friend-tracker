@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactsService } from '@core/services/contacts.service';
 import { Contact } from '@shared/models/contact';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-contacts-table',
@@ -56,13 +57,13 @@ export class ContactsTableComponent implements AfterViewInit {
     }
 
     // Birthday should only compare month and day.
-    if (prop === 'birthday' && value instanceof Date) {
-      return (value.getMonth() + 1) * 100 + value.getDate();
+    if (prop === 'birthday' && value instanceof DateTime) {
+      return (value.month * 100) + value.day;
     }
 
     // Dates -> epoch milliseconds.
-    if (value instanceof Date) {
-      return value.getTime();
+    if (value instanceof DateTime) {
+      return value.toMillis();
     }
 
     // Case‑insensitive string sorting.
@@ -73,42 +74,24 @@ export class ContactsTableComponent implements AfterViewInit {
     return value;
   }
 
-  protected daysTillBirthday(birthday: Date) {
-    const today = new Date();
+protected daysTillBirthday(birthDate: DateTime): number {
+  const today = DateTime.local().startOf('day');
 
-    // Strip time for more consistant comparison.
-    birthday.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
+  // Birthday in the current calendar year
+  let next = birthDate.set({ year: today.year });
 
-    const nextBirthday = new Date(birthday);
-    nextBirthday.setFullYear(today.getFullYear());
-
-    // If birthday past already, set it to next year.
-    if (nextBirthday.getTime() < today.getTime()) {
-      nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
-    }
-
-    // Get millisecond difference
-    const timeDifference = nextBirthday.getTime() - today.getTime();
-
-    // Convert millisecond difference to day difference
-    const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-    return dayDifference;
+  // If that date is in the past, move to next year
+  if (next < today) {
+    next = next.plus({ years: 1 });
   }
 
-  protected getContactAge(birthday: Date): number {
-    const today = new Date()
-    let age = today.getFullYear() - birthday.getFullYear()
+  // Whole days until next birthday
+  return Math.ceil(next.diff(today, 'days').days);
+}
 
-    // Adjust if today's month/day is before the birthday's month/day
-    const monthDiff = today.getMonth() - birthday.getMonth()
-    const dayDiff = today.getDate() - birthday.getDate()
-
-    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-      age--
-    }
-
-    return age
+  protected getContactAge(birthDate: DateTime): number {
+    const age = DateTime.now().diff(birthDate, 'years').years;
+    return Math.floor(age);
   }
 
   protected deleteContact(id: string) {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact, RawContact } from '@shared/models/contact';
 import { ContactFormData } from '@shared/models/contact-form-data';
+import { DateTime } from 'luxon';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -19,7 +20,7 @@ export class ContactsService {
   }
 
   private convertResponse(response: RawContact): Contact {
-    return { ...response, birthday: response.birthday ? new Date(response.birthday) : response.birthday } as Contact;
+    return { ...response, birthday: response.birthday ? DateTime.fromISO(response.birthday) : response.birthday } as Contact;
   }
 
   getContacts() {
