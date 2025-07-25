@@ -23,6 +23,14 @@
       <mat-label>Phone Number</mat-label>
       <input matInput type="tel" formControlName="phoneNumber" placeholder="000-000-0000">
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Relationship</mat-label>
+      <mat-select formControlName="relationship">
+        @for (status of statuses; track status) {
+        <mat-option [value]="status">{{status}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
