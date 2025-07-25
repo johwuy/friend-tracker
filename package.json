@@ -33,6 +33,7 @@
     "@angular/cli": "^20.0.2",
     "@angular/compiler-cli": "^20.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/luxon": "^3.6.2",
     "angular-eslint": "20.1.1",
     "eslint": "^9.29.0",
     "jasmine-core": "~5.7.0",
