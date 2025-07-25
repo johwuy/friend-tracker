@@ -2,7 +2,14 @@
   <h2 mat-dialog-title>Add New Contact</h2>
   <button matIconButton mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
-<mat-dialog-content>This dialog showcases the title, close, content and actions elements.</mat-dialog-content>
+<mat-dialog-content>
+  <form [formGroup]="contactForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Contact name" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Close</button>
 </mat-dialog-actions>
