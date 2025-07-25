@@ -10,7 +10,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Birthday</mat-label>
-      <input matInput type="date" formControlName="birthday" [matDatepicker]="picker">
+      <input matInput formControlName="birthday" [matDatepicker]="picker">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
