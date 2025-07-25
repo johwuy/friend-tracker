@@ -3,7 +3,7 @@
   <button matIconButton mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
 <mat-dialog-content>
-  <form [formGroup]="contactForm">
+  <form [formGroup]="contactForm" class="flex flex-col">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Contact name" required />
