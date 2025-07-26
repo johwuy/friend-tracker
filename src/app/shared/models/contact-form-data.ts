@@ -3,8 +3,8 @@ import { DateTime } from "luxon";
 
 export interface ContactFormData {
   name: string;
-  birthday?: DateTime;
-  email?: string;
-  phoneNumber?: string;
-  relationship?: RelationshipStatus;
+  birthday: DateTime | null;
+  email: string | null;
+  phoneNumber: string | null;
+  relationship: RelationshipStatus | null;
 }

@@ -37,11 +37,11 @@ export class ContactsTableComponent implements AfterViewInit {
   }
 
   private sortingDataAccessor(item: Contact, property: string): string | number {
-    if (property === 'daysTillBirthday' && item.birthday !== undefined) {
+    if (property === 'daysTillBirthday' && item.birthday !== null) {
       return this.daysTillBirthday(item.birthday);
     }
 
-    if (property === 'age' && item.birthday !== undefined) {
+    if (property === 'age' && item.birthday !== null) {
       return this.getContactAge(item.birthday);
     }
 
