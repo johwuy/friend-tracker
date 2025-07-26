@@ -30,6 +30,26 @@ export class CreateContactDialog {
     return this.contactForm.invalid;
   }
 
+  get name() {
+    return this.contactForm.get('name');
+  }
+
+  get birthday() {
+    return this.contactForm.get('birthday');
+  }
+
+  get email() {
+    return this.contactForm.get('email');
+  }
+
+  get phoneNumber() {
+    return this.contactForm.get('phoneNumber');
+  }
+
+  get relationship() {
+    return this.contactForm.get('relationship');
+  }
+
   protected submitContact() {
     console.log(this.contactForm);
   }
