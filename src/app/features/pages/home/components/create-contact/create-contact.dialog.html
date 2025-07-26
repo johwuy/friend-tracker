@@ -7,17 +7,21 @@
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Contact name" required />
+      <mat-error>Name is required</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Birthday</mat-label>
-      <input matInput formControlName="birthday" [matDatepicker]="picker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <input matInput formControlName="birthday" [matDatepicker]="picker" placeholder="MM/DD/YYYY">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+      @if (birthday?.hasError('matDatepickerParse')) {
+      <mat-error>Invalid date format</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" formControlName="email">
+      <mat-error>Email format invalid</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Phone Number</mat-label>
@@ -35,5 +39,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Close</button>
-  <button matButton form="contactForm">Create Contact</button>
+  <button matButton [disabled]="isInvalidForm" form="contactForm">Create Contact</button>
 </mat-dialog-actions>
