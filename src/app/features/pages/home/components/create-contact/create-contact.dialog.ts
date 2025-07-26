@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -7,7 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ContactsService } from '@core/services/contacts.service';
 import { RelationshipStatus, RelationshipStatuses } from '@shared/constants/relationship-status';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-create-contact',
@@ -16,11 +18,15 @@ import { RelationshipStatus, RelationshipStatuses } from '@shared/constants/rela
   styleUrl: './create-contact.dialog.scss'
 })
 export class CreateContactDialog {
+  private readonly contactsService = inject(ContactsService);
   protected readonly statuses = RelationshipStatuses;
 
   contactForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    birthday: new FormControl<Date | null>(null),
+    name: new FormControl('', {
+      validators: Validators.required,
+      nonNullable: true
+    }),
+    birthday: new FormControl<DateTime | null>(null),
     email: new FormControl<string | null>(null, Validators.email),
     phoneNumber: new FormControl<string | null>(null),
     relationship: new FormControl<RelationshipStatus | null>(null)
@@ -51,6 +57,6 @@ export class CreateContactDialog {
   }
 
   protected submitContact() {
-    console.log(this.contactForm);
+    this.contactsService.addContact(this.contactForm.getRawValue());
   }
 }
