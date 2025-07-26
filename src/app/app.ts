@@ -28,6 +28,8 @@ export class App {
   }
 
   openAddContactDialog() {
-    this.dialogService.open(CreateContactDialog);
+    this.dialogService.open(CreateContactDialog, {
+      width: '50%'
+    });
   }
 }
