@@ -3,7 +3,7 @@
   <button matIconButton mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
 <mat-dialog-content>
-  <form [formGroup]="contactForm" class="flex flex-col">
+  <form id="contactForm" [formGroup]="contactForm" class="flex flex-col" (ngSubmit)="submitContact()">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Contact name" required />
@@ -35,4 +35,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Close</button>
+  <button matButton form="contactForm">Create Contact</button>
 </mat-dialog-actions>

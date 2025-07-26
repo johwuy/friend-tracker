@@ -25,4 +25,12 @@ export class CreateContactDialog {
     phoneNumber: new FormControl<string | null>(null),
     relationship: new FormControl<RelationshipStatus | null>(null)
   });
+
+  get isInvalidForm() {
+    return this.contactForm.invalid;
+  }
+
+  protected submitContact() {
+    console.log(this.contactForm);
+  }
 }
