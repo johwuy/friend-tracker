@@ -1,3 +1,10 @@
 .mat-column-delete_contact {
   width: 48px;
 }
+
+:host {
+  ::ng-deep tr.mat-mdc-row:hover:not(:has(button:hover)) {
+    cursor: pointer;
+    filter: brightness(0.9);
+  }
+}
