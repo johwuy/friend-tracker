@@ -20,7 +20,8 @@ export class ContactsService {
   }
 
   private convertResponse(response: RawContact): Contact {
-    return { ...response, birthday: response.birthday ? DateTime.fromISO(response.birthday) : response.birthday } as Contact;
+    const parsedDate = response.birthday ? DateTime.fromISO(response.birthday) : null;
+    return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null } as Contact;
   }
 
   getContacts() {
