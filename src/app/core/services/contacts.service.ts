@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact, RawContact } from '@shared/models/contact';
-import { ContactFormData } from '@shared/models/contact-form-data';
+import { ContactFormData, RawContactFormData } from '@shared/models/contact-form-data';
 import { DateTime } from 'luxon';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +33,29 @@ export class ContactsService {
       .pipe(map(result => this.convertResponse(result)));
   }
 
-  addContact(formData: ContactFormData) {
-    // Make GET Http Request, which returns id
-    // In `subscribe`, add to `contacts`
-    console.log(formData);
+  addContact(formData: ContactFormData): Observable<Contact> {
+    const body: RawContactFormData = {
+      ...formData,
+      birthday: formData.birthday ? formData.birthday.toISO() : null,
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+
+    return this.httpService
+      .post<RawContact>(this.API_URL, body, httpOptions)
+      .pipe(
+        map(raw => {
+          const parsed = raw.birthday ? DateTime.fromISO(raw.birthday) : null;
+          return {
+            ...raw,
+            birthday: parsed && parsed.isValid ? parsed : null,
+          };
+        }),
+        tap(contact => this.contactsSignal.update(list => [...list, contact])),
+        catchError(err => throwError(() => err)),
+      );
   }
 
   updateContact(id: string, formData: Partial<ContactFormData>) {

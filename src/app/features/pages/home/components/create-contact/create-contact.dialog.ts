@@ -57,6 +57,6 @@ export class CreateContactDialog {
   }
 
   protected submitContact() {
-    this.contactsService.addContact(this.contactForm.getRawValue());
+    this.contactsService.addContact(this.contactForm.getRawValue()).subscribe();
   }
 }
