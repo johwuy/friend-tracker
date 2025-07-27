@@ -21,7 +21,7 @@ export class ContactsService {
 
   private stringContactToObject(response: StringContact): Contact {
     const parsedDate = response.birthday ? DateTime.fromISO(response.birthday) : null;
-    return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null } as Contact;
+    return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null };
   }
 
   getContacts() {
