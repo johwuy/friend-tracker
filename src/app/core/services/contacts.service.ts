@@ -19,19 +19,19 @@ export class ContactsService {
     this.getContacts().subscribe(result => this.contactsSignal.set(result));
   }
 
-  private convertResponse(response: StringContact): Contact {
+  private stringContactToObject(response: StringContact): Contact {
     const parsedDate = response.birthday ? DateTime.fromISO(response.birthday) : null;
     return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null } as Contact;
   }
 
   getContacts() {
     return this.httpService.get<StringContact[]>(this.API_URL)
-      .pipe(map(result => result.map(contact => this.convertResponse(contact))));
+      .pipe(map(result => result.map(contact => this.stringContactToObject(contact))));
   }
 
   getContact(id: string): Observable<Contact> {
     return this.httpService.get<StringContact>(`${this.API_URL}/${id}`)
-      .pipe(map(result => this.convertResponse(result)));
+      .pipe(map(result => this.stringContactToObject(result)));
   }
 
   addContact(formData: ContactFormData): Observable<Contact> {
