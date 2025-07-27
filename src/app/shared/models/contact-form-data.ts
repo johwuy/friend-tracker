@@ -9,6 +9,6 @@ export interface ContactFormData {
   relationship: RelationshipStatus | null;
 }
 
-export interface RawContactFormData extends Omit<ContactFormData, 'birthday'> {
+export interface StringContactFormData extends Omit<ContactFormData, 'birthday'> {
   birthday: string | null
 }

@@ -4,6 +4,6 @@ export interface Contact extends ContactFormData {
   id: string;
 }
 
-export interface RawContact extends Omit<Contact, 'birthday'> {
+export interface StringContact extends Omit<Contact, 'birthday'> {
   birthday: string | null;
 }

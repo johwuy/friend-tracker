@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Contact, RawContact } from '@shared/models/contact';
-import { ContactFormData, RawContactFormData } from '@shared/models/contact-form-data';
+import { Contact, StringContact } from '@shared/models/contact';
+import { ContactFormData, StringContactFormData } from '@shared/models/contact-form-data';
 import { DateTime } from 'luxon';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -19,23 +19,23 @@ export class ContactsService {
     this.getContacts().subscribe(result => this.contactsSignal.set(result));
   }
 
-  private convertResponse(response: RawContact): Contact {
+  private convertResponse(response: StringContact): Contact {
     const parsedDate = response.birthday ? DateTime.fromISO(response.birthday) : null;
     return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null } as Contact;
   }
 
   getContacts() {
-    return this.httpService.get<RawContact[]>(this.API_URL)
+    return this.httpService.get<StringContact[]>(this.API_URL)
       .pipe(map(result => result.map(contact => this.convertResponse(contact))));
   }
 
   getContact(id: string): Observable<Contact> {
-    return this.httpService.get<RawContact>(`${this.API_URL}/${id}`)
+    return this.httpService.get<StringContact>(`${this.API_URL}/${id}`)
       .pipe(map(result => this.convertResponse(result)));
   }
 
   addContact(formData: ContactFormData): Observable<Contact> {
-    const body: RawContactFormData = {
+    const body: StringContactFormData = {
       ...formData,
       birthday: formData.birthday ? formData.birthday.toISO() : null,
     };
@@ -45,7 +45,7 @@ export class ContactsService {
     };
 
     return this.httpService
-      .post<RawContact>(this.API_URL, body, httpOptions)
+      .post<StringContact>(this.API_URL, body, httpOptions)
       .pipe(
         map(raw => {
           const parsed = raw.birthday ? DateTime.fromISO(raw.birthday) : null;
