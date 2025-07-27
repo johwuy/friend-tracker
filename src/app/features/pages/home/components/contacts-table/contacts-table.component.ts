@@ -95,6 +95,6 @@ protected daysTillBirthday(birthDate: DateTime): number {
   }
 
   protected deleteContact(id: string) {
-    this.contactsService.deleteContact(id);
+    this.contactsService.deleteContact(id).subscribe();
   }
 }
