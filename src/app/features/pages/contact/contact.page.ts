@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
 import { Contact } from '@shared/models/contact';
 
@@ -10,6 +11,8 @@ import { Contact } from '@shared/models/contact';
   styleUrl: './contact.page.scss'
 })
 export class ContactPage implements OnInit {
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar)
   private activatedRoute = inject(ActivatedRoute);
   private contactsService = inject(ContactsService);
   protected data = signal<Contact | null>(null);
@@ -22,7 +25,11 @@ export class ContactPage implements OnInit {
 
   private fetchContact(id: string) {
     this.contactsService.getContact(id).subscribe({
-      next: contact => this.data.set(contact)
+      next: contact => this.data.set(contact),
+      error: () => {
+        this.router.navigate(['']);
+        this.snackBar.open(`Failed to fetch ${id}`, 'Close');
+      }
     });
   }
 
