@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
@@ -6,7 +7,7 @@ import { Contact } from '@shared/models/contact';
 
 @Component({
   selector: 'app-contact',
-  imports: [],
+  imports: [MatProgressSpinnerModule],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss'
 })
@@ -20,7 +21,7 @@ export class ContactPage implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.fetchContact(params['id']);
-    })
+    });
   }
 
   private fetchContact(id: string) {
