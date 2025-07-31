@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
 import { Contact } from '@shared/models/contact';
 import { DateTime } from 'luxon';
@@ -15,6 +16,7 @@ import { DateTime } from 'luxon';
   styleUrl: './contacts-table.component.scss'
 })
 export class ContactsTableComponent implements AfterViewInit {
+  private router = inject(Router);
   protected readonly columnsToDisplay = ['name', 'age', 'birthday', 'daysTillBirthday', 'relationship', 'delete_contact'];
 
   protected contactsService = inject(ContactsService);
@@ -96,5 +98,9 @@ protected daysTillBirthday(birthDate: DateTime): number {
 
   protected deleteContact(id: string) {
     this.contactsService.deleteContact(id).subscribe();
+  }
+
+  protected gotoContactPage(id: string) {
+    this.router.navigate(['/contact', id]);
   }
 }
