@@ -12,3 +12,11 @@ export interface ContactFormData {
 export interface StringContactFormData extends Omit<ContactFormData, 'birthday'> {
   birthday: string | null
 }
+
+export const CONTACT_LABEL_MAPPING: Record<keyof ContactFormData, string>  = {
+  birthday: 'Birthdaty',
+  email: 'Email',
+  name: 'Name',
+  phoneNumber: 'Phone Number',
+  relationship: 'Relationship'
+}
