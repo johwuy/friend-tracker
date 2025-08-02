@@ -7,3 +7,12 @@ export interface Contact extends ContactFormData {
 export interface StringContact extends Omit<Contact, 'birthday'> {
   birthday: string | null;
 }
+
+export const CONTACT_LABEL_MAPPING: Record<keyof Contact, string>  = {
+  id: 'Id',
+  birthday: 'Birthday',
+  email: 'Email',
+  name: 'Name',
+  phoneNumber: 'Phone Number',
+  relationship: 'Relationship'
+}
