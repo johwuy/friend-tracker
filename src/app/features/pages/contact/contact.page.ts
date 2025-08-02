@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +8,7 @@ import { Contact } from '@shared/models/contact';
 
 @Component({
   selector: 'app-contact',
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, MatDividerModule],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss'
 })
