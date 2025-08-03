@@ -24,6 +24,13 @@ export class ContactsService {
     return { ...response, birthday: parsedDate && parsedDate.isValid ? parsedDate : null };
   }
 
+  private objectContactToString(object: Contact | ContactFormData) {
+    return {
+      ...object,
+      birthday: object.birthday ? object.birthday.toISO() : null,
+    };
+  }
+
   getContacts() {
     return this.httpService.get<StringContact[]>(this.API_URL)
       .pipe(map(result => result.map(contact => this.stringContactToObject(contact))));
@@ -35,10 +42,7 @@ export class ContactsService {
   }
 
   addContact(formData: ContactFormData): Observable<Contact> {
-    const body: StringContactFormData = {
-      ...formData,
-      birthday: formData.birthday ? formData.birthday.toISO() : null,
-    };
+    const body: StringContactFormData = this.objectContactToString(formData);
 
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
