@@ -60,8 +60,22 @@ export class ContactsService {
   }
 
   updateContact(id: string, formData: Partial<ContactFormData>) {
-    // Make PATCH Http Request, on success update `contacts`
-    console.log(id, formData);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json-patch+json' }),
+    };
+
+    return this.httpService
+      .patch(`${this.API_URL}/${id}`, formData, httpOptions)
+      .pipe(
+        tap(() => {
+          this.contactsSignal.update(contacts => contacts.map(contact => {
+            if (contact.id !== id) {
+              return contact;
+            }
+            return { ...contact, ...formData };
+          }));
+        })
+      );
   }
 
   deleteContact(id: string) {
