@@ -1,11 +1,13 @@
 <mat-toolbar>
   <div class="w-full flex justify-between items-center">
     <a routerLink="/">{{title}}</a>
-    @if (isHomePath) {
-      <button matIconButton matTooltip="Add contact" (click)="openAddContactDialog()">
-        <mat-icon>person_add</mat-icon>
+    <div class="flex gap-2">
+      @for (action of actions(); track $index) {
+      <button matIconButton [matTooltip]="action.tooltip" (click)="action.callback()">
+        <mat-icon>{{ action.icon }}</mat-icon>
       </button>
-    }
+      }
+    </div>
   </div>
 </mat-toolbar>
 <div class="m-8">

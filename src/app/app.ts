@@ -1,13 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { RouterLink } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { filter } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateContactDialog } from '@features/pages/home/components/create-contact/create-contact.dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { ToolbarSerivce } from '@core/services/toolbar.serivce';
 
 @Component({
   selector: 'app-root',
@@ -18,18 +15,9 @@ import { CreateContactDialog } from '@features/pages/home/components/create-cont
 export class App {
   protected title = 'friend-tracker';
 
-  private dialogService = inject(MatDialog);
-  private routerService = inject(Router);
-  protected isHomePath = false;
+  protected toolbarService = inject(ToolbarSerivce);
+  protected actions = this.toolbarService.toolbarActions;
 
-  constructor() {
-    this.routerService.events.pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => this.isHomePath = event.urlAfterRedirects.startsWith('/home'));
-  }
+  constructor() { }
 
-  openAddContactDialog() {
-    this.dialogService.open(CreateContactDialog, {
-      width: '50%'
-    });
-  }
 }
