@@ -2,8 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact, StringContact } from '@shared/models/contact';
 import { ContactFormData, StringContactFormData } from '@shared/models/contact-form-data';
+import { compare } from 'fast-json-patch';
 import { DateTime } from 'luxon';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -63,21 +64,27 @@ export class ContactsService {
       );
   }
 
-  updateContact(id: string, formData: Partial<ContactFormData>) {
+  updateContact(id: string, originalData: Contact, modifiedData: Contact) {
+    const strOriginal = this.objectContactToString(originalData);
+    const strModified = this.objectContactToString(modifiedData);
+    const patchDoc = compare(strOriginal, strModified);
+
+    // nothing changed
+    if (!patchDoc || patchDoc.length === 0) {
+      return of(modifiedData);
+    }
+
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json-patch+json' }),
     };
 
     return this.httpService
-      .patch(`${this.API_URL}/${id}`, formData, httpOptions)
+      .patch<Contact>(`${this.API_URL}/${id}`, patchDoc, httpOptions)
       .pipe(
-        tap(() => {
-          this.contactsSignal.update(contacts => contacts.map(contact => {
-            if (contact.id !== id) {
-              return contact;
-            }
-            return { ...contact, ...formData };
-          }));
+        tap(updatedFromServer => {
+          this.contactsSignal.update(contacts =>
+            contacts.map(c => (c.id === id ? updatedFromServer : c))
+          );
         })
       );
   }
