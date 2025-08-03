@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
+import { ToolbarSerivce } from '@core/services/toolbar.serivce';
 import { Contact, CONTACT_LABEL_MAPPING, StringContact } from '@shared/models/contact';
 
 @Component({
@@ -13,11 +14,12 @@ import { Contact, CONTACT_LABEL_MAPPING, StringContact } from '@shared/models/co
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss'
 })
-export class ContactPage implements OnInit {
+export class ContactPage implements OnInit, OnDestroy {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar)
   private activatedRoute = inject(ActivatedRoute);
   private contactsService = inject(ContactsService);
+  private toolbarService = inject(ToolbarSerivce);
 
   protected readonly displayedColumns: string[] = ['label', 'value'];
 
@@ -25,8 +27,18 @@ export class ContactPage implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.fetchContact(params['id']);
+      const id = params['id'];
+      this.fetchContact(id);
+      this.toolbarService.setActions([{
+        icon: 'edit',
+        tooltip: 'Edit contact',
+        callback: () => this.openDialog(id)
+      }]);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.toolbarService.clearActions();
   }
 
   get dataSource(): { label: string, value: string }[] {
@@ -50,6 +62,10 @@ export class ContactPage implements OnInit {
         this.snackBar.open(`Failed to fetch ${id}`, 'Close');
       }
     });
+  }
+
+  private openDialog = (id: string) => {
+    console.log(`Open edit dialog for ${id}`);
   }
 
 }
