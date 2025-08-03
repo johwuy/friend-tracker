@@ -8,10 +8,10 @@
   <div class="my-4">
     <mat-divider></mat-divider>
   </div>
-  @if (dataSource.length === 0) {
+  @if (dataSource().length === 0) {
   <p>No data</p>
   } @else {
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource()">
     <mat-text-column name="label"></mat-text-column>
     <mat-text-column name="value"></mat-text-column>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,7 +41,7 @@ export class ContactPage implements OnInit, OnDestroy {
     this.toolbarService.clearActions();
   }
 
-  get dataSource(): { label: string, value: string }[] {
+ readonly dataSource = computed(() => {
     const excludeKey = new Set(['id', 'name']);
 
     const currentDate = this.data();
@@ -52,7 +52,7 @@ export class ContactPage implements OnInit, OnDestroy {
       const label = CONTACT_LABEL_MAPPING[key as keyof Contact];
       return { label: label, value: value }
     })
-  }
+  });
 
   private fetchContact(id: string) {
     this.contactsService.getContact(id).subscribe({
