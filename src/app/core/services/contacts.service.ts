@@ -52,13 +52,7 @@ export class ContactsService {
     return this.httpService
       .post<StringContact>(this.API_URL, body, httpOptions)
       .pipe(
-        map(raw => {
-          const parsed = raw.birthday ? DateTime.fromISO(raw.birthday) : null;
-          return {
-            ...raw,
-            birthday: parsed && parsed.isValid ? parsed : null,
-          };
-        }),
+        map(raw => this.stringContactToObject(raw)),
         tap(contact => this.contactsSignal.update(list => [...list, contact])),
         catchError(err => throwError(() => err)),
       );
