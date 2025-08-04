@@ -29,9 +29,9 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Relationship</mat-label>
-      <mat-select formControlName="relationship">
+      <mat-select formControlName="relationship" canSelectNullableOptions>
         @for (status of statuses; track status) {
-        <mat-option [value]="status">{{status}}</mat-option>
+        <mat-option [value]="status.value">{{ status.label }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
