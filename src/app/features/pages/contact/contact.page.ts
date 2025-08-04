@@ -44,7 +44,7 @@ export class ContactPage implements OnInit, OnDestroy {
     this.toolbarService.clearActions();
   }
 
- readonly dataSource = computed(() => {
+  readonly dataSource = computed(() => {
     const excludeKey = new Set(['id', 'name']);
 
     const currentDate = this.data();
@@ -68,12 +68,21 @@ export class ContactPage implements OnInit, OnDestroy {
   }
 
   private openDialog = (id: string) => {
-    this.dialogService.open(EditContactDialog, {
+    const dialogRef = this.dialogService.open(EditContactDialog, {
       width: '50%',
       data: id
     });
 
-    // On dialog close update data.
+    dialogRef.afterClosed().subscribe(result => {
+      const data = this.data();
+      if (!data || !result) return; // result can be null, when we close, but don't pass in a value.
+
+      this.contactsService
+        .updateContact(data.id, data, result)
+        .subscribe(contact => {
+          this.data.set(contact);
+        });
+    });
   }
 
 }
