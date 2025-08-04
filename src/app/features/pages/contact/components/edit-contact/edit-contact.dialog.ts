@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { ContactsService } from '@core/services/contacts.service';
 import { RelationshipStatus } from '@shared/constants/relationship-status';
 import { DateTime } from 'luxon';
 
@@ -11,8 +12,10 @@ import { DateTime } from 'luxon';
   templateUrl: './edit-contact.dialog.html',
   styleUrl: './edit-contact.dialog.scss'
 })
-export class EditContactDialog {
+export class EditContactDialog implements OnInit {
+  protected contactsService = inject(ContactsService);
   readonly id = signal(inject<string>(MAT_DIALOG_DATA));
+
   contactForm = new FormGroup({
     id: new FormControl(this.id(), {
       validators: Validators.required,
@@ -27,4 +30,11 @@ export class EditContactDialog {
     phoneNumber: new FormControl<string | null>(null),
     relationship: new FormControl<RelationshipStatus | null>(null)
   });
+
+  ngOnInit(): void {
+    this.contactsService.getContact(this.id()).subscribe(contact => {
+      this.contactForm.setValue(contact);
+    });
+  }
+
 }
