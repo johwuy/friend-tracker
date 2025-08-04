@@ -58,7 +58,7 @@ export class ContactsService {
       );
   }
 
-  updateContact(id: string, originalData: Contact, modifiedData: Contact) {
+  updateContact(id: string, originalData: Contact, modifiedData: Contact): Observable<Contact> {
     const strOriginal = this.objectContactToString(originalData);
     const strModified = this.objectContactToString(modifiedData);
     const patchDoc = compare(strOriginal, strModified);
@@ -73,8 +73,9 @@ export class ContactsService {
     };
 
     return this.httpService
-      .patch<Contact>(`${this.API_URL}/${id}`, patchDoc, httpOptions)
+      .patch<StringContact>(`${this.API_URL}/${id}`, patchDoc, httpOptions)
       .pipe(
+        map(strContact => this.stringContactToObject(strContact)),
         tap(updatedFromServer => {
           this.contactsSignal.update(contacts =>
             contacts.map(c => (c.id === id ? updatedFromServer : c))
