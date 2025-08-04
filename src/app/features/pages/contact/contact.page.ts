@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
 import { ToolbarSerivce } from '@core/services/toolbar.serivce';
 import { Contact, CONTACT_LABEL_MAPPING, StringContact } from '@shared/models/contact';
+import { EditContactDialog } from './components/edit-contact/edit-contact.dialog';
 
 @Component({
   selector: 'app-contact',
@@ -18,6 +20,7 @@ export class ContactPage implements OnInit, OnDestroy {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar)
   private activatedRoute = inject(ActivatedRoute);
+  private dialogService = inject(MatDialog);
   private contactsService = inject(ContactsService);
   private toolbarService = inject(ToolbarSerivce);
 
@@ -65,7 +68,12 @@ export class ContactPage implements OnInit, OnDestroy {
   }
 
   private openDialog = (id: string) => {
-    console.log(`Open edit dialog for ${id}`);
+    this.dialogService.open(EditContactDialog, {
+      width: '50%',
+      data: id
+    });
+
+    // On dialog close update data.
   }
 
 }
