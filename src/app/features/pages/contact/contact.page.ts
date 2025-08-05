@@ -11,10 +11,11 @@ import { ContactsService } from '@core/services/contacts.service';
 import { ToolbarSerivce } from '@core/services/toolbar.serivce';
 import { Contact, CONTACT_LABEL_MAPPING, StringContact } from '@shared/models/contact';
 import { EditContactDialog } from './components/edit-contact/edit-contact.dialog';
+import { NotesComponent } from "./components/notes/notes.component";
 
 @Component({
   selector: 'app-contact',
-  imports: [MatProgressSpinnerModule, MatDividerModule, MatTableModule, MatIconModule, MatTabsModule],
+  imports: [MatProgressSpinnerModule, MatDividerModule, MatTableModule, MatIconModule, MatTabsModule, NotesComponent, NotesComponent],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss'
 })
