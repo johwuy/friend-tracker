@@ -3,6 +3,9 @@
   <button matIconButton mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
 <mat-dialog-content>
+  @if (loading) {
+  <mat-spinner></mat-spinner>
+  } @else {
   <form id="contactForm" [formGroup]="contactForm" class="flex flex-col">
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -36,8 +39,10 @@
       </mat-select>
     </mat-form-field>
   </form>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Close</button>
-  <button matButton [mat-dialog-close]="contactForm.getRawValue()" type="submit" [disabled]="contactForm.invalid" form="contactForm">Save Contact</button>
+  <button matButton [mat-dialog-close]="contactForm.getRawValue()" type="submit" [disabled]="contactForm.invalid"
+    form="contactForm">Save Contact</button>
 </mat-dialog-actions>
