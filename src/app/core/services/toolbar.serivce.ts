@@ -13,8 +13,6 @@ export class ToolbarSerivce {
   private readonly toolbarActionsSignal = signal<ToolbarAction[]>([]);
   readonly toolbarActions = this.toolbarActionsSignal.asReadonly();
 
-  constructor() { }
-
   setActions(actions: ToolbarAction[]) {
     this.toolbarActionsSignal.set(actions);
   }

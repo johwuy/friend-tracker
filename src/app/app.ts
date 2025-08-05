@@ -18,6 +18,4 @@ export class App {
   protected readonly toolbarService = inject(ToolbarSerivce);
   protected readonly actions = this.toolbarService.toolbarActions;
 
-  constructor() { }
-
 }
