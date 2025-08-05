@@ -1,9 +1,11 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '@core/services/contacts.service';
 import { ToolbarSerivce } from '@core/services/toolbar.serivce';
@@ -12,7 +14,7 @@ import { EditContactDialog } from './components/edit-contact/edit-contact.dialog
 
 @Component({
   selector: 'app-contact',
-  imports: [MatProgressSpinnerModule, MatDividerModule, MatTableModule],
+  imports: [MatProgressSpinnerModule, MatDividerModule, MatTableModule, MatIconModule, MatTabsModule],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss'
 })
