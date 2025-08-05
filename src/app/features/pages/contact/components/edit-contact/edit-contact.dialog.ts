@@ -18,10 +18,10 @@ import { DateTime } from 'luxon';
   styleUrl: './edit-contact.dialog.scss'
 })
 export class EditContactDialog implements OnInit {
-  protected contactsService = inject(ContactsService);
-  readonly id = signal(inject<string>(MAT_DIALOG_DATA));
+  protected readonly contactsService = inject(ContactsService);
+  private readonly id = signal(inject<string>(MAT_DIALOG_DATA));
 
-  protected statuses = RelationshipStatuses;
+  protected readonly statuses = RelationshipStatuses;
 
   contactForm = new FormGroup({
     id: new FormControl(this.id(), {

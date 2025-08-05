@@ -10,7 +10,7 @@ export interface ToolbarAction {
   providedIn: 'root'
 })
 export class ToolbarSerivce {
-  private toolbarActionsSignal = signal<ToolbarAction[]>([]);
+  private readonly toolbarActionsSignal = signal<ToolbarAction[]>([]);
   readonly toolbarActions = this.toolbarActionsSignal.asReadonly();
 
   constructor() { }

@@ -17,16 +17,16 @@ import { EditContactDialog } from './components/edit-contact/edit-contact.dialog
   styleUrl: './contact.page.scss'
 })
 export class ContactPage implements OnInit, OnDestroy {
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar)
-  private activatedRoute = inject(ActivatedRoute);
-  private dialogService = inject(MatDialog);
-  private contactsService = inject(ContactsService);
-  private toolbarService = inject(ToolbarSerivce);
+  private readonly router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly dialogService = inject(MatDialog);
+  private readonly contactsService = inject(ContactsService);
+  private readonly toolbarService = inject(ToolbarSerivce);
 
   protected readonly displayedColumns: string[] = ['label', 'value'];
 
-  protected data = signal<Contact | null>(null);
+  protected readonly data = signal<Contact | null>(null);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -44,7 +44,7 @@ export class ContactPage implements OnInit, OnDestroy {
     this.toolbarService.clearActions();
   }
 
-  readonly dataSource = computed(() => {
+  protected readonly dataSource = computed(() => {
     const excludeKey = new Set(['id', 'name']);
 
     const currentDate = this.data();

@@ -15,8 +15,8 @@ import { ToolbarSerivce } from '@core/services/toolbar.serivce';
 export class App {
   protected title = 'friend-tracker';
 
-  protected toolbarService = inject(ToolbarSerivce);
-  protected actions = this.toolbarService.toolbarActions;
+  protected readonly toolbarService = inject(ToolbarSerivce);
+  protected readonly actions = this.toolbarService.toolbarActions;
 
   constructor() { }
 

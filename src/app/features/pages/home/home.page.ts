@@ -11,8 +11,8 @@ import { CreateContactDialog } from './components/create-contact/create-contact.
   styleUrl: './home.page.scss'
 })
 export class HomePage implements OnInit, OnDestroy {
-  private dialogService = inject(MatDialog);
-  private toolbarService = inject(ToolbarSerivce);
+  private readonly dialogService = inject(MatDialog);
+  private readonly toolbarService = inject(ToolbarSerivce);
 
   ngOnInit(): void {
     this.toolbarService.setActions([{

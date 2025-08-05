@@ -11,8 +11,8 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ContactsService {
-  private httpService = inject(HttpClient);
-  private contactsSignal = signal<Contact[]>([]);
+  private readonly httpService = inject(HttpClient);
+  private readonly contactsSignal = signal<Contact[]>([]);
   readonly contacts = this.contactsSignal.asReadonly();
   private readonly API_URL = 'http://localhost:5149/api/contacts';
 

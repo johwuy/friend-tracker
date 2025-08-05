@@ -16,13 +16,13 @@ import { DateTime } from 'luxon';
   styleUrl: './contacts-table.component.scss'
 })
 export class ContactsTableComponent implements AfterViewInit {
-  private router = inject(Router);
+  private readonly router = inject(Router);
   protected readonly columnsToDisplay = ['name', 'age', 'birthday', 'daysTillBirthday', 'relationship', 'delete_contact'];
 
-  protected contactsService = inject(ContactsService);
+  protected readonly contactsService = inject(ContactsService);
 
   // dataSource only recieives a snapshop ot contacts.
-  protected dataSource = new MatTableDataSource<Contact>(this.contactsService.contacts());
+  protected readonly dataSource = new MatTableDataSource<Contact>(this.contactsService.contacts());
 
   @ViewChild(MatSort) sort!: MatSort;
 
