@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './notes.component.scss'
 })
 export class NotesComponent {
+  readonly contactId = input.required<string>();
 
 }
