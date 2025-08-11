@@ -1,9 +1,9 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { InteractionDialog } from './interaction/interaction.dialog';
-import { Interaction } from '@shared/models/interaction';
 import { InteractionsService } from '@core/services/interactions.service';
+import { Interaction, InteractionDTO } from '@shared/models/interaction';
+import { InteractionDialog } from './interaction/interaction.dialog';
 
 @Component({
   selector: 'app-interactions',
@@ -27,8 +27,14 @@ export class InteractionsComponent implements OnInit {
   }
 
   protected handleDialog() {
-    this.dialogService.open(InteractionDialog, {
+    const diagRef = this.dialogService.open(InteractionDialog, {
       width: '50%'
+    });
+
+    diagRef.afterClosed().subscribe((result: InteractionDTO) => {
+      this.interactionsService.addInteraction(this.contactId(), result).subscribe(interaction => {
+        this._interactionsSignal.update(interactions => [interaction, ...interactions]);
+      })
     });
   }
 }
