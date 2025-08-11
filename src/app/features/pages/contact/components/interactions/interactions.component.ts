@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { InteractionDialog } from './interaction/interaction.dialog';
 
-
 @Component({
   selector: 'app-interactions',
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './interactions.component.html',
   styleUrl: './interactions.component.scss'
 })
