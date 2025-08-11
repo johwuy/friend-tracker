@@ -32,4 +32,13 @@ export class NotesComponent implements OnInit {
   protected clearNote() {
     this.notes.reset(this.originalNote);
   }
+
+  protected updateNote() {
+    const content = this.notes.value;
+    if (content === null) return;
+    this.notesService.updateNote(this.contactId(), content).subscribe(() => {
+      this.originalNote = content;
+      this.notes.reset(this.originalNote);
+    });
+  }
 }
