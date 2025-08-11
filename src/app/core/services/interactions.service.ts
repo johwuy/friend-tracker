@@ -39,6 +39,17 @@ export class InteractionsService {
       );
   }
 
+  addInteraction(contactId: string, dto: InteractionDTO): Observable<Interaction> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    const body = this.objectInteractionToString(dto);
+    return this.httpService.post<StringInteraction>(`${this.API_URL}/${contactId}`, body, httpOptions)
+      .pipe(
+        map(interaction => this.stringInteracionToObject(interaction))
+      );
+  }
+
   updateInteraction(contactId: string, interactionId: string, dto: InteractionDTO) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
