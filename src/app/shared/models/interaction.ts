@@ -1,0 +1,14 @@
+import { DateTime } from "luxon";
+
+export interface Interaction {
+  id: string;
+  content: string;
+  date: DateTime;
+}
+
+export interface StringInteraction extends Omit<Interaction, 'date'> {
+  date: string;
+}
+
+export type InteractionDTO = Omit<Interaction, 'id'>;
+
