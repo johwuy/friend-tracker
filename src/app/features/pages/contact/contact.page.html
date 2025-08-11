@@ -26,18 +26,14 @@
         <mat-icon class="mr-2">notes</mat-icon>
         Notes
       </ng-template>
-      @if (data() !== null) {
-        <app-notes [contactId]="data()!.id"></app-notes>
-      }
+      <app-notes [contactId]="data()!.id"></app-notes>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="mr-2">history</mat-icon>
         Interactions
       </ng-template>
-      @if (data() !== null) {
-        <app-interactions></app-interactions>
-      }
+      <app-interactions></app-interactions>
     </mat-tab>
   </mat-tab-group>
 </div>
