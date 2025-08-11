@@ -28,4 +28,8 @@ export class NotesComponent implements OnInit {
       this.originalNote = note.content;
     });
   }
+
+  protected clearNote() {
+    this.notes.reset(this.originalNote);
+  }
 }

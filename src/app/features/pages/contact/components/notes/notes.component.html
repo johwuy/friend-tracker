@@ -4,7 +4,7 @@
   </mat-form-field>
   @if (noteChanged) {
   <div class="flex gap-4 button-container">
-    <button matButton="elevated">Cancel</button>
+    <button matButton="elevated" (click)="clearNote()">Cancel</button>
     <button matButton="elevated">Save</button>
   </div>
   }
