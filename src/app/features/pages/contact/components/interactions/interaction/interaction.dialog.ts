@@ -13,7 +13,7 @@ import { DateTime } from 'luxon';
 })
 export class InteractionDialog {
   protected readonly interactionForm = new FormGroup({
-    date: new FormControl<DateTime>(DateTime.local()),
+    date: new FormControl<string>(DateTime.now().toFormat('yyyy-MM-dd')),
     content: new FormControl<string>('')
   });
 
