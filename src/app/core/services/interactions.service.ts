@@ -14,7 +14,7 @@ export class InteractionsService {
 
   // Feat?: add cache.
 
-  private stringContactToObject(response: StringInteraction): Interaction {
+  private stringInteracionToObject(response: StringInteraction): Interaction {
     const parsedDate = DateTime.fromISO(response.date);
     return { ...response, date: parsedDate };
   }
@@ -23,7 +23,7 @@ export class InteractionsService {
     return this.httpService.get<StringInteraction[]>(`${this.API_URL}/${contactId}`)
       .pipe(
         map(interactions => {
-          return interactions.map(interaction => this.stringContactToObject(interaction));
+          return interactions.map(interaction => this.stringInteracionToObject(interaction));
         })
       );
   }
@@ -31,7 +31,7 @@ export class InteractionsService {
   fetchInteraction(contactId: string, interactionId: string): Observable<Interaction> {
     return this.httpService.get<StringInteraction>(`${this.API_URL}/${contactId}/${interactionId}`)
       .pipe(
-        map(interaction => this.stringContactToObject(interaction))
+        map(interaction => this.stringInteracionToObject(interaction))
       );
   }
 
