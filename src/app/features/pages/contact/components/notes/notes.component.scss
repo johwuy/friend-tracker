@@ -3,4 +3,8 @@
     field-sizing: content;
     min-height: 3lh;
   }
+
+  div.button-container button {
+    flex: 1;
+  }
 }

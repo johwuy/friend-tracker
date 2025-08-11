@@ -1,3 +1,11 @@
-<mat-form-field class="w-full my-4">
-  <textarea matInput [placeholder]="placeholderText" [formControl]="notes"></textarea>
-</mat-form-field>
+<div class="my-4 flex flex-col">
+  <mat-form-field class="w-full ">
+    <textarea matInput [placeholder]="placeholderText" [formControl]="notes"></textarea>
+  </mat-form-field>
+  @if (noteChanged) {
+  <div class="flex gap-4 button-container">
+    <button matButton="elevated">Cancel</button>
+    <button matButton="elevated">Save</button>
+  </div>
+  }
+</div>
