@@ -12,3 +12,7 @@ export interface StringInteraction extends Omit<Interaction, 'date'> {
 
 export type InteractionDTO = Omit<Interaction, 'id'>;
 
+export interface StringInteractionDTO extends Omit<Interaction, 'id' | 'date'> {
+  date: string;
+}
+
