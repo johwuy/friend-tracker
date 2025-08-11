@@ -15,7 +15,7 @@ import { DateTime } from 'luxon';
   styleUrl: './interaction.dialog.scss'
 })
 export class InteractionDialog {
-  private readonly id = signal(inject<string>(MAT_DIALOG_DATA));
+  protected readonly id = signal(inject<string>(MAT_DIALOG_DATA));
   protected readonly interactionForm = new FormGroup({
     date: new FormControl<string>(DateTime.now().toFormat('yyyy-MM-dd'), { nonNullable: true, validators: Validators.required }),
     content: new FormControl<string>('', { nonNullable: true, validators: Validators.required })

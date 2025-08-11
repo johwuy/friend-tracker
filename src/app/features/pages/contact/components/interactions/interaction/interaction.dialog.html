@@ -1,5 +1,5 @@
 <div class="header">
-  <h2 mat-dialog-title>Add Interaction</h2>
+  <h2 mat-dialog-title>{{id() ? 'Edit' : 'Add'}} Interaction</h2>
   <button matIconButton mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
 <mat-dialog-content>
@@ -15,5 +15,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Close</button>
-  <button matButton mat-dialog-close [disabled]="interactionForm.invalid">Save Interaction</button>
+  <button matButton [mat-dialog-close]="rawValue" [disabled]="interactionForm.invalid">Save Interaction</button>
 </mat-dialog-actions>
