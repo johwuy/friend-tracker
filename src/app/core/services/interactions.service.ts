@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Interaction, InteractionDTO, StringInteraction } from '@shared/models/interaction';
+import { Interaction, InteractionDTO, StringInteraction, StringInteractionDTO } from '@shared/models/interaction';
 import { DateTime } from 'luxon';
 import { map, Observable } from 'rxjs';
 
@@ -17,6 +17,10 @@ export class InteractionsService {
   private stringInteracionToObject(response: StringInteraction): Interaction {
     const parsedDate = DateTime.fromISO(response.date);
     return { ...response, date: parsedDate };
+  }
+
+  private objectInteractionToString(object: Interaction | InteractionDTO): StringInteraction | StringInteractionDTO {
+    return {...object, date: object.date.toISODate()!};
   }
 
   fectchInteractions(contactId: string): Observable<Interaction[]> {
@@ -39,7 +43,8 @@ export class InteractionsService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    return this.httpService.put(`${this.API_URL}/${contactId}/${interactionId}`, dto, httpOptions);
+    const body = this.objectInteractionToString(dto);
+    return this.httpService.put(`${this.API_URL}/${contactId}/${interactionId}`, body, httpOptions);
   }
 
   deleteInteraction(contactId: string, interactionId: string) {
