@@ -30,6 +30,15 @@
         <app-notes [contactId]="data()!.id"></app-notes>
       }
     </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="mr-2">history</mat-icon>
+        Interactions
+      </ng-template>
+      @if (data() !== null) {
+        <app-interactions></app-interactions>
+      }
+    </mat-tab>
   </mat-tab-group>
 </div>
 }
