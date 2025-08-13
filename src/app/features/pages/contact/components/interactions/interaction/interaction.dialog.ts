@@ -21,6 +21,10 @@ export class InteractionDialog {
     content: new FormControl<string>('', { nonNullable: true, validators: Validators.required })
   });
 
+  get isEditing() {
+    return 'id' in this.data();
+  }
+
   get rawValue(): Interaction | InteractionDTO {
     const existingData = this.data();
     const data = {
