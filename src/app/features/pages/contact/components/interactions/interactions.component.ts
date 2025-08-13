@@ -28,8 +28,9 @@ export class InteractionsComponent implements OnInit {
   }
 
   protected handleDialog() {
-    const diagRef = this.dialogService.open(InteractionDialog, {
-      width: '50%'
+    const diagRef = this.dialogService.open<InteractionDialog, CreateInteractionDialogData>(InteractionDialog, {
+      width: '50%',
+      data: {contactId: this.contactId()}
     });
 
     diagRef.afterClosed().subscribe((result: InteractionDTO) => {
