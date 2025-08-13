@@ -43,7 +43,7 @@ export class InteractionsComponent implements OnInit {
 
   updateInteraction(data: Interaction) {
     const { id, ...dto } = data;
-    this.interactionsService.updateInteraction(this.contactId(), id, dto).subscribe(() => {
+    this.interactionsService.updateInteraction(id, dto).subscribe(() => {
       this._interactionsSignal.update(interactions => {
         return interactions.map(interaction => interaction.id === id ? data : interaction)
       });
