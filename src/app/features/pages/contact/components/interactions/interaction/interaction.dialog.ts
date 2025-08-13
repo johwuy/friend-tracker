@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -14,12 +14,19 @@ import { DateTime } from 'luxon';
   templateUrl: './interaction.dialog.html',
   styleUrl: './interaction.dialog.scss'
 })
-export class InteractionDialog {
-  protected readonly data = signal(inject<CreateInteractionDialogData | Interaction>(MAT_DIALOG_DATA));
+export class InteractionDialog implements OnInit {
+  protected readonly data = signal(inject<CreateInteractionDialogData & Interaction>(MAT_DIALOG_DATA));
   protected readonly interactionForm = new FormGroup({
     date: new FormControl<string>(DateTime.now().toFormat('yyyy-MM-dd'), { nonNullable: true, validators: Validators.required }),
     content: new FormControl<string>('', { nonNullable: true, validators: Validators.required })
   });
+
+  ngOnInit(): void {
+    if (this.isEditing) {
+      this.contentControl?.setValue(this.data().content);
+      this.dateControl?.setValue(this.data().date.toFormat('yyyy-MM-dd'));
+    }
+  }
 
   get isEditing() {
     return 'id' in this.data();
