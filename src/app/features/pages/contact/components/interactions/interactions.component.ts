@@ -2,9 +2,9 @@ import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { InteractionsService } from '@core/services/interactions.service';
-import { Interaction, InteractionDTO } from '@shared/models/interaction';
-import { InteractionDialog } from './interaction/interaction.dialog';
 import { InteractionComponent } from '@shared/components/interaction/interaction.component';
+import { CreateInteractionDialogData, Interaction, InteractionDTO } from '@shared/models/interaction';
+import { InteractionDialog } from './interaction/interaction.dialog';
 
 @Component({
   selector: 'app-interactions',
@@ -24,6 +24,7 @@ export class InteractionsComponent implements OnInit {
   ngOnInit(): void {
     this.interactionsService.fectchInteractions(this.contactId()).subscribe(result => {
       this._interactionsSignal.set(result);
+      console.log(result);
     })
   }
 
@@ -34,7 +35,7 @@ export class InteractionsComponent implements OnInit {
     });
 
     diagRef.afterClosed().subscribe((result: InteractionDTO) => {
-      this.interactionsService.addInteraction(this.contactId(), result).subscribe(interaction => {
+      this.interactionsService.addInteraction(result).subscribe(interaction => {
         this._interactionsSignal.update(interactions => [interaction, ...interactions]);
       })
     });
