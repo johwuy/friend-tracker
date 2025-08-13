@@ -1,7 +1,12 @@
 import { DateTime } from "luxon";
 
+export interface CreateInteractionDialogData {
+  contactId: string;
+}
+
 export interface Interaction {
   id: string;
+  contactId: string;
   content: string;
   date: DateTime;
 }
