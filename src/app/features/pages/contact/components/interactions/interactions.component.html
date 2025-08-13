@@ -1,3 +1,8 @@
 <div class="my-4 flex flex-col">
   <button matButton="elevated" (click)="handleDialog()">Add interaction</button>
 </div>
+<div class="flex flex-col gap-4">
+  @for (interaction of interactions(); track $index) {
+  <app-interaction [interaction]="interaction"></app-interaction>
+  }
+</div>

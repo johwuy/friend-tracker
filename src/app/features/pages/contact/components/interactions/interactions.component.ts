@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { InteractionsService } from '@core/services/interactions.service';
 import { Interaction, InteractionDTO } from '@shared/models/interaction';
 import { InteractionDialog } from './interaction/interaction.dialog';
+import { InteractionComponent } from '@shared/components/interaction/interaction.component';
 
 @Component({
   selector: 'app-interactions',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, InteractionComponent],
   templateUrl: './interactions.component.html',
   styleUrl: './interactions.component.scss'
 })
