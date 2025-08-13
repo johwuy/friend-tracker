@@ -47,4 +47,12 @@ export class InteractionsComponent implements OnInit {
       });
     });
   }
+
+  deleteInteraction(interactionId: string) {
+    this.interactionsService.deleteInteraction(this.contactId(), interactionId).subscribe(() => {
+      this._interactionsSignal.update(interactions => {
+        return interactions.filter(interaction => interaction.id !== interactionId)
+      });
+    });
+  }
 }

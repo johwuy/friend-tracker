@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,4 +12,9 @@ import { Interaction } from '@shared/models/interaction';
 })
 export class InteractionComponent {
   readonly interaction = input.required<Interaction>();
+  readonly deleteInteractionClick = output<string>();
+
+  deleteInteraction() {
+    this.deleteInteractionClick.emit(this.interaction().id);
+  }
 }
