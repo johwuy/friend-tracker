@@ -42,10 +42,9 @@ export class InteractionsComponent implements OnInit {
   }
 
   updateInteraction(data: Interaction) {
-    const { id, ...dto } = data;
-    this.interactionsService.updateInteraction(id, dto).subscribe(() => {
+    this.interactionsService.updateInteraction(data).subscribe(() => {
       this._interactionsSignal.update(interactions => {
-        return interactions.map(interaction => interaction.id === id ? data : interaction)
+        return interactions.map(interaction => interaction.id === data.id ? data : interaction)
       });
     });
   }

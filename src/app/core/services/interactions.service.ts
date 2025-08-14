@@ -52,12 +52,12 @@ export class InteractionsService {
       );
   }
 
-  updateInteraction(interactionId: string, dto: InteractionDTO): Observable<Interaction> {
+  updateInteraction(data: Interaction): Observable<Interaction> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    const body = this.objectInteractionToString(dto);
-    return this.httpService.put<StringInteraction>(`${this.API_URL}/${dto.contactId}/${interactionId}`, body, httpOptions)
+    const {contactId, id, ...body} = this.objectInteractionToString(data);
+    return this.httpService.put<StringInteraction>(`${this.API_URL}/${contactId}/${id}`, body, httpOptions)
       .pipe(
         map(interaction => this.stringInteracionToObject(interaction))
       );
