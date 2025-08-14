@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { InteractionDialog } from '@features/pages/contact/components/interactions/interaction/interaction.dialog';
-import { Interaction } from '@shared/models/interaction';
+import { Interaction, InteractionIdentifier } from '@shared/models/interaction';
 
 @Component({
   selector: 'app-interaction',
@@ -15,11 +15,15 @@ import { Interaction } from '@shared/models/interaction';
 export class InteractionComponent {
   private readonly dialogService = inject(MatDialog);
   readonly interaction = input.required<Interaction>();
-  readonly deleteInteractionClick = output<string>();
+  readonly deleteInteractionClick = output<InteractionIdentifier>();
   readonly updateInteractionEvent = output<Interaction>();
 
   deleteInteraction() {
-    this.deleteInteractionClick.emit(this.interaction().id);
+    const identifiers: InteractionIdentifier = {
+      contactId: this.interaction().contactId,
+      id: this.interaction().id
+    }
+    this.deleteInteractionClick.emit(identifiers);
   }
 
   updateInteraction() {

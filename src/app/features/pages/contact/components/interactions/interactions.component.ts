@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { InteractionsService } from '@core/services/interactions.service';
 import { InteractionComponent } from '@shared/components/interaction/interaction.component';
-import { CreateInteractionDialogData, Interaction, InteractionDTO } from '@shared/models/interaction';
+import { CreateInteractionDialogData, Interaction, InteractionDTO, InteractionIdentifier } from '@shared/models/interaction';
 import { InteractionDialog } from './interaction/interaction.dialog';
 
 @Component({
@@ -49,10 +49,11 @@ export class InteractionsComponent implements OnInit {
     });
   }
 
-  deleteInteraction(interactionId: string) {
-    this.interactionsService.deleteInteraction(this.contactId(), interactionId).subscribe(() => {
+  deleteInteraction(identifiers: InteractionIdentifier) {
+    const {contactId, id} = identifiers;
+    this.interactionsService.deleteInteraction(contactId, id).subscribe(() => {
       this._interactionsSignal.update(interactions => {
-        return interactions.filter(interaction => interaction.id !== interactionId)
+        return interactions.filter(interaction => interaction.id !== id)
       });
     });
   }
