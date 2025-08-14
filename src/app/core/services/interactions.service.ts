@@ -19,8 +19,10 @@ export class InteractionsService {
     return { ...response, date: parsedDate };
   }
 
+  private objectInteractionToString(object: Interaction): StringInteraction;
+  private objectInteractionToString(object: InteractionDTO): StringInteractionDTO;
   private objectInteractionToString(object: Interaction | InteractionDTO): StringInteraction | StringInteractionDTO {
-    return {...object, date: object.date.toISODate()!};
+    return { ...object, date: object.date.toISODate()! };
   }
 
   fectchInteractions(contactId: string): Observable<Interaction[]> {
