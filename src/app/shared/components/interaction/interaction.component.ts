@@ -29,7 +29,9 @@ export class InteractionComponent {
     });
 
     diagRef.afterClosed().subscribe((result: Interaction) => {
-      this.updateInteractionEvent.emit(result);
+      if (result) {
+        this.updateInteractionEvent.emit(result);
+      }
     })
   }
 }
